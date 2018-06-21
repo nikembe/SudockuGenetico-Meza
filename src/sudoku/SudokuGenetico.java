@@ -50,7 +50,24 @@ public class SudokuGenetico extends javax.swing.JFrame {
             public void run() {
                 new SudokuGenetico().setVisible(true);
             }
+            
         });
+        Sudoku ini = new Sudoku(); 
+        int [][] mat = new int [9][9];
+        for(int i=0;i<9;i++)
+            for(int j=0;j<9;j++)
+                mat[i][j]=j+1;
+ 
+
+        /*for(int i=0;i<9;i++)   
+        {
+            for(int j=0;j<9;j++)
+                System.out.print(mat[i][j] + "  ");
+            System.out.println(" ");
+        }*/
+        int a;
+        a=ini.fitness(mat);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
