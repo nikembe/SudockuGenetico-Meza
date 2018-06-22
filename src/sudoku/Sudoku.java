@@ -13,18 +13,24 @@ import java.util.Random;
  */
 public class Sudoku{
     final int N = 9;
-    int[][] tablero = new int[N][N];
+        int[][] tablero = new int[N][N];
     int aptitud;
     
+
     //inicializa un sudoku en 0
     Sudoku(){
         for(int i=0; i<N; i++){
+            Random ale = new Random();
             for(int j=0; j<N; j++){
-                tablero[i][j] = 0;
+                 int n = ale.nextInt(9)+1;
+                tablero[i][j] = n;
+                System.out.print(tablero[i][j]);
             }
+            System.out.println("");
+            
         }
-        
-        aptitud = 0;
+            System.out.println("");System.out.println("");
+        fitness();
     }
     
     //crea un sudoku aleatorio a partir de una matríz de casillas bloqueadas
@@ -106,20 +112,16 @@ public class Sudoku{
 
             //      System.out.println(" ");
         }
-    System.out.println("fitness por matrizes de 3*3: " + fitness);    
+    System.out.println("fitness por matrizes de:  " + fitness);    
     aptitud=fitness;
     }
     
     //       System.out.println(" ");
-}
+
    
    
 //      System.out.println(" ");
-}
-System.out.println("fitness por matrizes de 3*3: " + fitness);    
-     return fitness;
-    }
-    
+   
     void Cruce(Sudoku padre1, Sudoku padre2){
         int[] padreVector1 = new int[N*N];
         int[] padreVector2 = new int[N*N];
@@ -170,5 +172,8 @@ System.out.println("fitness por matrizes de 3*3: " + fitness);
         }
         System.out.println("\n Punto aleatorio: " + div);
         tablero = hijo.tablero;
+        fitness();
     }
+    
+    
 }

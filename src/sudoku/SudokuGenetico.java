@@ -5,6 +5,7 @@
  */
 package sudoku;
 
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -54,31 +55,12 @@ public class SudokuGenetico extends javax.swing.JFrame {
             }
             
         });
-        Sudoku ini = new Sudoku();
-        Sudoku p1 = new Sudoku(); 
-        Sudoku p2 = new Sudoku(); 
-        Sudoku hijo = new Sudoku(); 
-        int [][] mat = new int [9][9];
-
-        for(int i=0;i<9;i++)
-        {
-            for(int j=0;j<9;j++)
-            {
-                p1.tablero[i][j]=j+1;
-            }
-        }
-        for(int i=0;i<9;i++)
-        {Random ale = new Random();
-            for(int j=0;j<9;j++)
-            {   int n = ale.nextInt(9)+1;
-                p2.tablero[i][j]=n;
-            }
-        }
-
-        int a;
-        ini.fitness();
-        a=ini.fitness(mat);
-        hijo.Cruce(p1, p2);
+        Sudoku [] poblacion= new Sudoku[100];
+        for(int i =0; i<100;i++)
+            poblacion[i]=new Sudoku();
+        
+        for(int i=0; i<100;i++)
+            System.out.println(poblacion[i].aptitud);
 
     }
 
