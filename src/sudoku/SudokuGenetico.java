@@ -77,7 +77,6 @@ public class SudokuGenetico extends javax.swing.JFrame {
 
         int a;
         ini.fitness();
-        a=ini.fitness(mat);
         hijo.Cruce(p1, p2);
 
     }

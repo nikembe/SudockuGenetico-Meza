@@ -13,6 +13,7 @@ import java.util.Random;
  */
 public class Sudoku{
     final int N = 9;
+    final int probabildiadMutacion = 2; //2%
     int[][] tablero = new int[N][N];
     int aptitud;
     
@@ -109,17 +110,7 @@ public class Sudoku{
     System.out.println("fitness por matrizes de 3*3: " + fitness);    
     aptitud=fitness;
     }
-    
-    //       System.out.println(" ");
-}
-   
-   
-//      System.out.println(" ");
-}
-System.out.println("fitness por matrizes de 3*3: " + fitness);    
-     return fitness;
-    }
-    
+
     void Cruce(Sudoku padre1, Sudoku padre2){
         int[] padreVector1 = new int[N*N];
         int[] padreVector2 = new int[N*N];
@@ -170,5 +161,17 @@ System.out.println("fitness por matrizes de 3*3: " + fitness);
         }
         System.out.println("\n Punto aleatorio: " + div);
         tablero = hijo.tablero;
+        Mutacion();
+    }
+    
+    void Mutacion(){
+        Random aleatorio = new Random();
+        for(int i=0;i<N;i++){
+            for(int j=0;j<N;j++){
+                if((aleatorio.nextInt(100)+1) <= probabildiadMutacion){
+                    tablero[i][j] = aleatorio.nextInt(9)+1;
+                }
+            }
+        }
     }
 }
