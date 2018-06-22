@@ -19,9 +19,9 @@ public class SudokuGenetico extends javax.swing.JFrame {
     
     Container c = getContentPane();
     JTextField[] casillas = new JTextField[81];     // vector de casillas del tablero
-    final int GENERACIONES = 5000;
-    final int POBLACION = 300;
-    final int CHIDOS = 50;
+    final int GENERACIONES = 30000;
+    final int POBLACION = 200;
+    final int CHIDOS = 5;
 
     public SudokuGenetico() {
         initComponents();
@@ -93,6 +93,16 @@ public class SudokuGenetico extends javax.swing.JFrame {
         casillas[78].setText("9");
         casillas[80].setText("8");
     }
+    
+    void llenarCasillas(Sudoku respuesta) {
+        int cont = 0;
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                casillas[cont].setText(respuesta.tablero[i][j] + "");
+                cont++;
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,19 +158,19 @@ public class SudokuGenetico extends javax.swing.JFrame {
             }
         }
         
-        for(int i =0; i<POBLACION;i++){
+        for(int i =0; i<POBLACION; i++){
             poblacion[i] = new Sudoku();
             poblacion2[i] = new Sudoku();
             poblacion[i].ponerMatriz(predefinidos);
         }
         
-        for(int k=0; k<GENERACIONES; k++){
+        for(int k=0; true; k++){
             Arrays.sort(poblacion);
             
             System.out.println("\n***Población " + k + "***");
-            for(int i=0; i<POBLACION;i++){
+            /*for(int i=0; i<POBLACION;i++){
                 System.out.println(poblacion[i].aptitud);
-            }
+            }*/
             
             /*for(int p=0; p<POBLACION; p++){
                 for(int i=0; i<9;i++){
@@ -185,8 +195,8 @@ public class SudokuGenetico extends javax.swing.JFrame {
             for(int i=0; i<CHIDOS;  i++){
                 mejores[i] = new Sudoku();
                 mejores[i] = poblacion[i];
-                if(i > 14)
-                    mejores[i].Mutacion();
+                mejores[i].Mutacion();
+                mejores[i].ponerMatriz(predefinidos);
             }
             
             for(int i=0; i<CHIDOS;  i++){
@@ -196,8 +206,8 @@ public class SudokuGenetico extends javax.swing.JFrame {
             Random ale = new Random();
             
             for(int i=CHIDOS; i<POBLACION;  i++){
-                int pos1 = ale.nextInt(CHIDOS-35);
-                int pos2 = ale.nextInt(CHIDOS-35);
+                int pos1 = ale.nextInt(CHIDOS);
+                int pos2 = ale.nextInt(CHIDOS);
                 poblacion2[i] = new Sudoku(mejores[pos1], mejores[pos2]);
                 poblacion2[i].Mutacion();
                 poblacion2[i].ponerMatriz(predefinidos);
@@ -242,6 +252,8 @@ public class SudokuGenetico extends javax.swing.JFrame {
         }
         
         System.out.print("\n" + poblacion[0].aptitud);
+        
+        llenarCasillas(poblacion[0]);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
