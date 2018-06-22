@@ -5,15 +5,63 @@
  */
 package sudoku;
 
+import java.awt.Container;
+import javax.swing.JTextField;
+
 
 /**
  *
  * @author Siul
  */
 public class SudokuGenetico extends javax.swing.JFrame {
+    
+    Container c = getContentPane();
+    JTextField[] casillas = new JTextField[81];     // vector de casillas del tablero
 
     public SudokuGenetico() {
         initComponents();
+        
+        initComponents();
+        
+        int posx, posy;
+        int[] sudockuInt = new int[81];
+        
+        // genera el tablero
+        posx = 200;
+        
+        for(int i=0; i<9; i++){
+            
+            posy = -10;
+            
+            for(int j=0; j<9; j++){
+                casillas[(9*i)+j] = new JTextField();
+                casillas[(9*i)+j].setText("");
+                
+                if((j)%3 == 0){
+                    posy += 45;
+                }
+                else{
+                    posy += 35;
+                }
+                    
+                casillas[(9*i)+j].setBounds(posx, posy, 30, 30);
+
+                c.add(casillas[(9*i)+j]);
+            }
+            
+            if((i)%3 == 0){
+                posx += 45;
+            }
+            else{
+                posx += 35;
+            }
+        }
+        
+        for(int i=0; i<15; i++){
+            if(!casillas[i].getText().equals("")){
+                sudockuInt[i]= Integer.parseInt(casillas[i].getText());
+            }
+        }
     }
 
     /**
@@ -35,7 +83,7 @@ public class SudokuGenetico extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 702, Short.MAX_VALUE)
+            .addGap(0, 836, Short.MAX_VALUE)
         );
 
         pack();
