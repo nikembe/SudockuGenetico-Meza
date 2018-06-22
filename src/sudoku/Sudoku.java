@@ -13,33 +13,39 @@ import java.util.Random;
  */
 public class Sudoku implements Comparable<Sudoku>{
     final int N = 9;
-    final int probabildiadMutacion = 2; //2%
+    final int probabildiadMutacion = 3; //2%
     int[][] tablero = new int[N][N];
     int aptitud;
     
-
-    //inicializa un sudoku en 0
     Sudoku(){
+        int cont = 0;
+        Random ale = new Random();
+        
         for(int i=0; i<N; i++){
-            Random ale = new Random();
             for(int j=0; j<N; j++){
-                 int n = ale.nextInt(9)+1;
+                int n = ale.nextInt(9)+1;
                 tablero[i][j] = n;
+            }
+        }
+        
+        //fitness();
+    }
+    
+    void ponerMatriz(int[] predefinidos){
+        int cont = 0;
+        
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(predefinidos[cont] != 0){
+                    tablero[i][j] = predefinidos[cont];
+                }
+                cont++;
             }
         }
         
         fitness();
     }
     
-    //crea un sudoku aleatorio a partir de una matríz de casillas bloqueadas
-    Sudoku(int[][] bloqueos){
-
-    }
-    
-    //crea un sudoku a partir de un vector de valores y una matríz casillas bloqueadas
-    Sudoku(int[] valores, int[][] bloqueos){
-
-    }
     void fitness(){
         int fitness=0, cont=0;
         int [] num= new int[10];
@@ -112,7 +118,8 @@ public class Sudoku implements Comparable<Sudoku>{
         aptitud=fitness;
     }
 
-    void Cruce(Sudoku padre1, Sudoku padre2){
+    // cruce
+    Sudoku(Sudoku padre1, Sudoku padre2){
         int[] padreVector1 = new int[N*N];
         int[] padreVector2 = new int[N*N];
         int[] hijoVector = new int[N*N];
@@ -125,7 +132,9 @@ public class Sudoku implements Comparable<Sudoku>{
             }
         }
         Random ale = new Random();
-        int div = ale.nextInt(80)+1;
+        int div = ale.nextInt(79)+1;
+        
+        //System.out.println("\n\ndiv: " + div + "\n");
         
         for(int i=0;i<div;i++){
             hijoVector[i] = padreVector1[i];
@@ -139,7 +148,32 @@ public class Sudoku implements Comparable<Sudoku>{
             }
         }
         tablero = hijo.tablero;
-        Mutacion();
+        
+        /*System.out.println("\n*Padre 1*");
+        for(int i=0; i<9;i++){
+            for(int j=0; j<9;j++){
+                System.out.print(padre1.tablero[i][j]);
+            }
+            System.out.println();
+        }
+        
+        System.out.println("\n*Padre 2*");
+        for(int i=0; i<9;i++){
+            for(int j=0; j<9;j++){
+                System.out.print(padre2.tablero[i][j]);
+            }
+            System.out.println();
+        }
+        
+        System.out.println("\n*Hijo*");
+        for(int i=0; i<9;i++){
+            for(int j=0; j<9;j++){
+                System.out.print(hijo.tablero[i][j]);
+            }
+            System.out.println();
+        }*/
+        
+        //Mutacion();
     }
 
     @Override
@@ -153,6 +187,7 @@ public class Sudoku implements Comparable<Sudoku>{
         return 0;
     }
     
+    // mutación
     void Mutacion(){
         Random aleatorio = new Random();
         for(int i=0;i<N;i++){

@@ -18,31 +18,31 @@ public class SudokuGenetico extends javax.swing.JFrame {
     
     Container c = getContentPane();
     JTextField[] casillas = new JTextField[81];     // vector de casillas del tablero
+    final int GENERACIONES = 10000;
+    final int POBLACION = 100;
 
     public SudokuGenetico() {
         initComponents();
         
-        initComponents();
-        
         int posx, posy;
-        int[] sudockuInt = new int[81];
         
         // genera el tablero
-        posx = 200;
+        posy = 10;
         
         for(int i=0; i<9; i++){
             
-            posy = -10;
+            posx = 200;
             
             for(int j=0; j<9; j++){
                 casillas[(9*i)+j] = new JTextField();
                 casillas[(9*i)+j].setText("");
+                casillas[(9*i)+j].setHorizontalAlignment(JTextField.CENTER);
                 
                 if((j)%3 == 0){
-                    posy += 45;
+                    posx += 45;
                 }
                 else{
-                    posy += 35;
+                    posx += 35;
                 }
                     
                 casillas[(9*i)+j].setBounds(posx, posy, 30, 30);
@@ -50,29 +50,46 @@ public class SudokuGenetico extends javax.swing.JFrame {
                 c.add(casillas[(9*i)+j]);
             }
             
-            if((i)%3 == 0){
-                posx += 45;
+            if((i+1)%3 == 0){
+                posy += 45;
             }
             else{
-                posx += 35;
+                posy += 35;
             }
         }
         
-        for(int i=0; i<15; i++){
-            if(!casillas[i].getText().equals("")){
-                sudockuInt[i]= Integer.parseInt(casillas[i].getText());
-            }
-        }
-        
-        Sudoku [] poblacion= new Sudoku[100];
-        
-        for(int i =0; i<100;i++)
-            poblacion[i]=new Sudoku();
-        
-        Arrays.sort(poblacion);
-
-        for(int i=0; i<100;i++)
-            System.out.println(poblacion[i].aptitud);
+        casillas[0].setText("4");
+        casillas[2].setText("3");
+        casillas[6].setText("6");
+        casillas[7].setText("7");
+        casillas[12].setText("1");
+        casillas[14].setText("9");
+        casillas[18].setText("2");
+        casillas[20].setText("9");
+        casillas[22].setText("3");
+        casillas[23].setText("6");
+        casillas[24].setText("1");
+        casillas[28].setText("9");
+        casillas[31].setText("6");
+        casillas[32].setText("2");
+        casillas[36].setText("7");
+        casillas[38].setText("6");
+        casillas[42].setText("5");
+        casillas[44].setText("4");
+        casillas[48].setText("5");
+        casillas[49].setText("1");
+        casillas[52].setText("9");
+        casillas[56].setText("1");
+        casillas[57].setText("6");
+        casillas[58].setText("9");
+        casillas[60].setText("3");
+        casillas[62].setText("7");
+        casillas[66].setText("3");
+        casillas[68].setText("8");
+        casillas[73].setText("3");
+        casillas[74].setText("4");
+        casillas[78].setText("9");
+        casillas[80].setText("8");
     }
 
     /**
@@ -84,21 +101,127 @@ public class SudokuGenetico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Resolver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 811, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(694, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 836, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(780, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int[] predefinidos = new int[81];
+        Sudoku [] poblacion= new Sudoku[POBLACION];
+        Sudoku[] poblacion2 = new Sudoku[POBLACION];
+        
+        for(int i=0; i<81; i++){
+            if(!casillas[i].getText().equals("")){
+                predefinidos[i]= Integer.parseInt(casillas[i].getText());
+            }
+            else{
+                predefinidos[i] = 0;
+            }
+        }
+        
+        for(int i =0; i<POBLACION;i++){
+            poblacion[i] = new Sudoku();
+            poblacion2[i] = new Sudoku();
+            poblacion[i].ponerMatriz(predefinidos);
+        }
+        
+        for(int k=0; k<GENERACIONES; k++){
+            Arrays.sort(poblacion);
+            
+            System.out.println("\n***Población " + k + "***");
+            for(int i=0; i<POBLACION;i++){
+                System.out.println(poblacion[i].aptitud);
+            }
+            
+            /*for(int p=0; p<POBLACION; p++){
+                for(int i=0; i<9;i++){
+                    for(int j=0; j<9;j++){
+                        System.out.print(poblacion[p].tablero[i][j]);
+                    }
+                    System.out.println();
+                }
+                
+                System.out.println();
+            }
+            
+            System.out.println();*/
+            
+            if(poblacion[0].aptitud == 243)
+                break;
+
+            int cont = 0;
+            
+            Sudoku[] mejores = new Sudoku[10];
+            
+            for(int i=0; i<10;  i++){
+                mejores[i] = poblacion[i];
+                if(i < 6)
+                    mejores[i].Mutacion();
+            }
+            
+            for(int i=0; i<10;i++){
+                for(int j=0; j<10;j++){
+                    if(i == j){
+                        poblacion2[cont] = mejores[i];
+                    }
+                    else{
+                        poblacion2[cont] = new Sudoku(mejores[i], mejores[j]);
+                        poblacion2[cont].Mutacion();
+                    }
+                    poblacion2[cont].ponerMatriz(predefinidos);
+                    cont++;
+                }
+            }
+
+            poblacion = poblacion2;
+            
+            System.arraycopy(mejores, 0, poblacion, 0, 10);
+
+        }
+        
+        Arrays.sort(poblacion);
+        
+        System.out.println("\n***Población final***");
+        for(int i=0; i<POBLACION;i++){
+            System.out.println(poblacion[i].aptitud);
+        }
+        
+        for(int i=0; i<9;i++){
+            for(int j=0; j<9;j++){
+                System.out.print(poblacion[0].tablero[i][j]);
+            }
+            System.out.println();
+        }
+        
+        System.out.print("\n" + poblacion[0].aptitud);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -113,5 +236,6 @@ public class SudokuGenetico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
