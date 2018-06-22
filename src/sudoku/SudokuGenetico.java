@@ -5,7 +5,9 @@
  */
 package sudoku;
 
-import java.util.Random;
+import java.awt.Container;
+import java.util.Arrays;
+import javax.swing.JTextField;
 
 
 /**
@@ -13,9 +15,64 @@ import java.util.Random;
  * @author Siul
  */
 public class SudokuGenetico extends javax.swing.JFrame {
+    
+    Container c = getContentPane();
+    JTextField[] casillas = new JTextField[81];     // vector de casillas del tablero
 
     public SudokuGenetico() {
         initComponents();
+        
+        initComponents();
+        
+        int posx, posy;
+        int[] sudockuInt = new int[81];
+        
+        // genera el tablero
+        posx = 200;
+        
+        for(int i=0; i<9; i++){
+            
+            posy = -10;
+            
+            for(int j=0; j<9; j++){
+                casillas[(9*i)+j] = new JTextField();
+                casillas[(9*i)+j].setText("");
+                
+                if((j)%3 == 0){
+                    posy += 45;
+                }
+                else{
+                    posy += 35;
+                }
+                    
+                casillas[(9*i)+j].setBounds(posx, posy, 30, 30);
+
+                c.add(casillas[(9*i)+j]);
+            }
+            
+            if((i)%3 == 0){
+                posx += 45;
+            }
+            else{
+                posx += 35;
+            }
+        }
+        
+        for(int i=0; i<15; i++){
+            if(!casillas[i].getText().equals("")){
+                sudockuInt[i]= Integer.parseInt(casillas[i].getText());
+            }
+        }
+        
+        Sudoku [] poblacion= new Sudoku[100];
+        
+        for(int i =0; i<100;i++)
+            poblacion[i]=new Sudoku();
+        
+        Arrays.sort(poblacion);
+
+        for(int i=0; i<100;i++)
+            System.out.println(poblacion[i].aptitud);
     }
 
     /**
@@ -37,7 +94,7 @@ public class SudokuGenetico extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 702, Short.MAX_VALUE)
+            .addGap(0, 836, Short.MAX_VALUE)
         );
 
         pack();
@@ -52,33 +109,7 @@ public class SudokuGenetico extends javax.swing.JFrame {
             public void run() {
                 new SudokuGenetico().setVisible(true);
             }
-            
         });
-        Sudoku ini = new Sudoku();
-        Sudoku p1 = new Sudoku(); 
-        Sudoku p2 = new Sudoku(); 
-        Sudoku hijo = new Sudoku(); 
-        int [][] mat = new int [9][9];
-
-        for(int i=0;i<9;i++)
-        {
-            for(int j=0;j<9;j++)
-            {
-                p1.tablero[i][j]=j+1;
-            }
-        }
-        for(int i=0;i<9;i++)
-        {Random ale = new Random();
-            for(int j=0;j<9;j++)
-            {   int n = ale.nextInt(9)+1;
-                p2.tablero[i][j]=n;
-            }
-        }
-
-        int a;
-        ini.fitness();
-        hijo.Cruce(p1, p2);
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

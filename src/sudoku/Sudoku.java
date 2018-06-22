@@ -11,21 +11,24 @@ import java.util.Random;
  *
  * @author Siul
  */
-public class Sudoku{
+public class Sudoku implements Comparable<Sudoku>{
     final int N = 9;
     final int probabildiadMutacion = 2; //2%
     int[][] tablero = new int[N][N];
     int aptitud;
     
+
     //inicializa un sudoku en 0
     Sudoku(){
         for(int i=0; i<N; i++){
+            Random ale = new Random();
             for(int j=0; j<N; j++){
-                tablero[i][j] = 0;
+                 int n = ale.nextInt(9)+1;
+                tablero[i][j] = n;
             }
         }
         
-        aptitud = 0;
+        fitness();
     }
     
     //crea un sudoku aleatorio a partir de una matríz de casillas bloqueadas
@@ -37,8 +40,7 @@ public class Sudoku{
     Sudoku(int[] valores, int[][] bloqueos){
 
     }
-    void fitness()
-    {
+    void fitness(){
         int fitness=0, cont=0;
         int [] num= new int[10];
         for(int i=0;i<10;i++)
@@ -107,8 +109,7 @@ public class Sudoku{
 
             //      System.out.println(" ");
         }
-    System.out.println("fitness por matrizes de 3*3: " + fitness);    
-    aptitud=fitness;
+        aptitud=fitness;
     }
 
     void Cruce(Sudoku padre1, Sudoku padre2){
@@ -137,31 +138,19 @@ public class Sudoku{
                 hijo.tablero[i][j] = hijoVector[(N*i)+j];
             }
         }
-        
-        System.out.print("\n\n HIJO:");
-        for(int i=0;i<N;i++){
-            System.out.print("\n");
-            for(int j=0;j<N;j++){
-                System.out.print(" " + hijo.tablero[i][j]);
-            }
-        }
-        System.out.print("\n\n Padre 1:");
-        for(int i=0;i<N;i++){
-            System.out.print("\n");
-            for(int j=0;j<N;j++){
-                System.out.print(" " + padre1.tablero[i][j]);
-            }
-        }
-        System.out.print("\n\n Padre 2:");
-        for(int i=0;i<N;i++){
-            System.out.print("\n");
-            for(int j=0;j<N;j++){
-                System.out.print(" " + padre2.tablero[i][j]);
-            }
-        }
-        System.out.println("\n Punto aleatorio: " + div);
         tablero = hijo.tablero;
         Mutacion();
+    }
+
+    @Override
+    public int compareTo(Sudoku o) {
+        if (aptitud > o.aptitud) {
+            return -1;
+        }
+        if (aptitud < o.aptitud) {
+            return 1;
+        }
+        return 0;
     }
     
     void Mutacion(){
