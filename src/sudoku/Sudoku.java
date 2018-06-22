@@ -5,6 +5,8 @@
  */;
 package sudoku;
 
+import java.util.Random;
+
 /**
  *
  * @author Siul
@@ -108,4 +110,65 @@ public class Sudoku{
     aptitud=fitness;
     }
     
+    //       System.out.println(" ");
+}
+   
+   
+//      System.out.println(" ");
+}
+System.out.println("fitness por matrizes de 3*3: " + fitness);    
+     return fitness;
+    }
+    
+    void Cruce(Sudoku padre1, Sudoku padre2){
+        int[] padreVector1 = new int[N*N];
+        int[] padreVector2 = new int[N*N];
+        int[] hijoVector = new int[N*N];
+        Sudoku hijo = new Sudoku();
+
+        for(int i=0;i<N;i++){
+            for(int j=0;j<N;j++){
+                padreVector1[(N*i)+j] = padre1.tablero[i][j];
+                padreVector2[(N*i)+j] = padre2.tablero[i][j];
+            }
+        }
+        Random ale = new Random();
+        int div = ale.nextInt(80)+1;
+        
+        for(int i=0;i<div;i++){
+            hijoVector[i] = padreVector1[i];
+        }
+        for(int i=div;i<(N*N);i++){
+            hijoVector[i] = padreVector2[i];
+        }
+        for(int i=0;i<N;i++){
+            for(int j=0;j<N;j++){
+                hijo.tablero[i][j] = hijoVector[(N*i)+j];
+            }
+        }
+        
+        System.out.print("\n\n HIJO:");
+        for(int i=0;i<N;i++){
+            System.out.print("\n");
+            for(int j=0;j<N;j++){
+                System.out.print(" " + hijo.tablero[i][j]);
+            }
+        }
+        System.out.print("\n\n Padre 1:");
+        for(int i=0;i<N;i++){
+            System.out.print("\n");
+            for(int j=0;j<N;j++){
+                System.out.print(" " + padre1.tablero[i][j]);
+            }
+        }
+        System.out.print("\n\n Padre 2:");
+        for(int i=0;i<N;i++){
+            System.out.print("\n");
+            for(int j=0;j<N;j++){
+                System.out.print(" " + padre2.tablero[i][j]);
+            }
+        }
+        System.out.println("\n Punto aleatorio: " + div);
+        tablero = hijo.tablero;
+    }
 }
