@@ -6,6 +6,7 @@
 package sudoku;
 
 import java.awt.Container;
+import java.util.Arrays;
 import javax.swing.JTextField;
 
 
@@ -62,6 +63,16 @@ public class SudokuGenetico extends javax.swing.JFrame {
                 sudockuInt[i]= Integer.parseInt(casillas[i].getText());
             }
         }
+        
+        Sudoku [] poblacion= new Sudoku[100];
+        
+        for(int i =0; i<100;i++)
+            poblacion[i]=new Sudoku();
+        
+        Arrays.sort(poblacion);
+
+        for(int i=0; i<100;i++)
+            System.out.println(poblacion[i].aptitud);
     }
 
     /**
