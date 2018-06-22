@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Sudoku implements Comparable<Sudoku>{
     final int N = 9;
-    final int probabildiadMutacion = 3; //2%
+    final int probabildiadMutacion = 7; //2%
     int[][] tablero = new int[N][N];
     int aptitud;
     

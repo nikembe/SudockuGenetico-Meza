@@ -7,6 +7,7 @@ package sudoku;
 
 import java.awt.Container;
 import java.util.Arrays;
+import java.util.Random;
 import javax.swing.JTextField;
 
 
@@ -18,8 +19,9 @@ public class SudokuGenetico extends javax.swing.JFrame {
     
     Container c = getContentPane();
     JTextField[] casillas = new JTextField[81];     // vector de casillas del tablero
-    final int GENERACIONES = 10000;
-    final int POBLACION = 100;
+    final int GENERACIONES = 5000;
+    final int POBLACION = 300;
+    final int CHIDOS = 50;
 
     public SudokuGenetico() {
         initComponents();
@@ -178,15 +180,32 @@ public class SudokuGenetico extends javax.swing.JFrame {
 
             int cont = 0;
             
-            Sudoku[] mejores = new Sudoku[10];
+            Sudoku[] mejores = new Sudoku[CHIDOS];
             
-            for(int i=0; i<10;  i++){
+            for(int i=0; i<CHIDOS;  i++){
+                mejores[i] = new Sudoku();
                 mejores[i] = poblacion[i];
-                if(i < 6)
+                if(i > 14)
                     mejores[i].Mutacion();
             }
             
-            for(int i=0; i<10;i++){
+            for(int i=0; i<CHIDOS;  i++){
+                poblacion2[i] = mejores[i];
+            }
+            
+            Random ale = new Random();
+            
+            for(int i=CHIDOS; i<POBLACION;  i++){
+                int pos1 = ale.nextInt(CHIDOS-35);
+                int pos2 = ale.nextInt(CHIDOS-35);
+                poblacion2[i] = new Sudoku(mejores[pos1], mejores[pos2]);
+                poblacion2[i].Mutacion();
+                poblacion2[i].ponerMatriz(predefinidos);
+                
+                //System.out.println("\n***pos1: " + pos1 + "pos2: " + pos2 + "****");
+            }
+            
+            /*for(int i=0; i<10;i++){
                 for(int j=0; j<10;j++){
                     if(i == j){
                         poblacion2[cont] = mejores[i];
@@ -198,11 +217,13 @@ public class SudokuGenetico extends javax.swing.JFrame {
                     poblacion2[cont].ponerMatriz(predefinidos);
                     cont++;
                 }
-            }
+            }*/
 
             poblacion = poblacion2;
             
-            System.arraycopy(mejores, 0, poblacion, 0, 10);
+            for(int i=0; i<CHIDOS;  i++){
+                poblacion[i] = mejores[i];
+            }
 
         }
         
