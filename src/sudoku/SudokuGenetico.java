@@ -66,7 +66,7 @@ public class SudokuGenetico extends javax.swing.JFrame {
             System.out.println(" ");
         }*/
         int a;
-        a=ini.fitness(mat);
+        ini.fitness();
 
     }
 
