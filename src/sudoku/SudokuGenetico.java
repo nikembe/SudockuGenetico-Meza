@@ -20,8 +20,8 @@ public class SudokuGenetico extends javax.swing.JFrame {
     Container c = getContentPane();
     JTextField[] casillas = new JTextField[81];     // vector de casillas del tablero
     final int GENERACIONES = 30000;
-    final int POBLACION = 200;
-    final int CHIDOS = 5;
+    final int POBLACION = 100;
+    final int CHIDOS = 10;
 
     public SudokuGenetico() {
         initComponents();
@@ -166,8 +166,8 @@ public class SudokuGenetico extends javax.swing.JFrame {
         
         for(int k=0; true; k++){
             Arrays.sort(poblacion);
-            
-            System.out.println("\n***Población " + k + "***");
+            if(k%10000==0)
+                System.out.println("\n***Población " + k + "***" + "fitness : " + poblacion[0].aptitud);
             /*for(int i=0; i<POBLACION;i++){
                 System.out.println(poblacion[i].aptitud);
             }*/
@@ -193,9 +193,11 @@ public class SudokuGenetico extends javax.swing.JFrame {
             Sudoku[] mejores = new Sudoku[CHIDOS];
             
             for(int i=0; i<CHIDOS;  i++){
+                
                 mejores[i] = new Sudoku();
                 mejores[i] = poblacion[i];
-                mejores[i].Mutacion();
+                if(i>1)
+                    mejores[i].Mutacion();
                 mejores[i].ponerMatriz(predefinidos);
             }
             
